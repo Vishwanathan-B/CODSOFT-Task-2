@@ -1,4 +1,4 @@
- MY TASK IN CODSOFT INTERNSHIP TASK-2
+/* MY INTERNSHIP TASK 2 NUMBER GUESSING GAME */
 
 
 
@@ -6,92 +6,36 @@
 
 
 #include <iostream>
-#include <vector>
-#include <string>
-#include <algorithm>
-
-struct Task {
-    std::string name;
-    bool completed = false;
-};
-
-std::vector<Task> tasks;
-
-void addTask() {
-    std::string taskName;
-    std::cout << "Enter task name: ";
-    std::getline(std::cin, taskName);
-    tasks.push_back({taskName, false});
-    std::cout << "Task added: " << taskName << std::endl;
-}
-
-void viewTasks() {
-    std::cout << "To-Do List:" << std::endl;
-    for (const auto& task : tasks) {
-        std::cout << (task.completed ? "[X] " : "[ ] ") << task.name << std::endl;
-    }
-}
-
-void markTaskAsCompleted() {
-    viewTasks();
-    int taskIndex;
-    std::cout << "Enter the index of the task to mark as completed: ";
-    std::cin >> taskIndex;
-    std::cin.ignore(); // Ignore the newline character
-    if (taskIndex >= 0 && taskIndex < tasks.size()) {
-        tasks[taskIndex].completed = true;
-        std::cout << "Task marked as completed: " << tasks[taskIndex].name << std::endl;
-    } else {
-        std::cout << "Invalid task index." << std::endl;
-    }
-}
-
-void removeTask() {
-    viewTasks();
-    int taskIndex;
-    std::cout << "Enter the index of the task to remove: ";
-    std::cin >> taskIndex;
-    std::cin.ignore(); // Ignore the newline character
-    if (taskIndex >= 0 && taskIndex < tasks.size()) {
-        std::string removedTask = tasks[taskIndex].name;
-        tasks.erase(tasks.begin() + taskIndex);
-        std::cout << "Removed task: " << removedTask << std::endl;
-    } else {
-        std::cout << "Invalid task index." << std::endl;
-    }
-}
+#include <cstdlib>
+#include <ctime>
 
 int main() {
-    int choice;
-    while (true) {
-        std::cout << "\nTo-Do List Manager" << std::endl;
-        std::cout << "1. Add Task" << std::endl;
-        std::cout << "2. View Tasks" << std::endl;
-        std::cout << "3. Mark Task as Completed" << std::endl;
-        std::cout << "4. Remove Task" << std::endl;
-        std::cout << "5. Quit" << std::endl;
-        std::cout << "Enter your choice: ";
-        std::cin >> choice;
-        std::cin.ignore(); // Ignore the newline character
+    // Seed the random number generator with the current time
+    std::srand(static_cast<unsigned int>(std::time(0)));
+    
+    // Generate a random number between 1 and 100
+    int randomNumber = std::rand() % 100 + 1;
+    int userGuess = 0;
 
-        switch (choice) {
-            case 1:
-                addTask();
-                break;
-            case 2:
-                viewTasks();
-                break;
-            case 3:
-                markTaskAsCompleted();
-                break;
-            case 4:
-                removeTask();
-                break;
-            case 5:
-                std::cout << "Exiting to-do list manager..." << std::endl;
-                return 0;
-            default:
-                std::cout << "Invalid choice. Please try again." << std::endl;
+    std::cout << "Guess the number (between 1 and 100): ";
+
+    // Loop until the user guesses the correct number
+    while (true) {
+        std::cin >> userGuess;
+
+        if (userGuess < randomNumber) {
+            std::cout << "Too low. Try again: ";
+        } else if (userGuess > randomNumber) {
+            std::cout << "Too high. Try again: ";
+        } else {
+            std::cout << "Congratulations! You guessed the correct number: " << randomNumber << std::endl;
+            break;
         }
     }
+
+    return 0;
 }
+
+
+
+
